@@ -1,0 +1,744 @@
+//FACTORIAL
+#include <stdio.h> 
+#include <conio.h>
+	
+long int factorial(int n);
+		
+	int main ()
+	{
+		int valor;
+		long int result; 
+		printf("\nIngrese numero:");
+		scanf("%d",&valor);
+		
+		if (valor < 0) printf("Error"); 
+		else
+		{
+			result=factorial(valor);
+			printf("\nEl factorial de %d es %ld",valor,result);
+		}
+		getch(); 
+		return 0;
+	}
+	long int factorial(int n)
+	{
+		long int resp; 
+		if(n==1 || n==0)
+			return 1;
+        else
+			resp=n* factorial(n-1);
+		return (resp);
+	}
+
+==============================================================
+//POTENCIA
+#include <stdio.h>
+
+// Declaraci�n de la funci�n recursiva
+double calcularPotencia(double base, int exponente);
+
+int main() {
+	double base = 2.0;
+	int exponente = 3;
+	
+	// Llamada a la funci�n
+	double resultado = calcularPotencia(base, exponente);
+	
+	printf("%.2f elevado a la %d es: %.2f\n", base, exponente, resultado);
+	
+	return 0;
+}
+
+// Definici�n de la funci�n recursiva
+double calcularPotencia(double base, int exponente) {
+	// Caso base: cualquier n�mero elevado a 0 es 1
+	if (exponente == 0) {
+		return 1;
+	}
+	// Caso recursivo para exponentes negativos
+	else if (exponente < 0) {
+		return 1 / calcularPotencia(base, -exponente);
+	}
+	// Caso recursivo para exponentes positivos
+	else {
+		return base * calcularPotencia(base, exponente - 1);
+	}
+}
+
+======================================================================
+//FIBONACCI
+#include <stdio.h>
+
+// Funci�n recursiva para calcular el en�simo t�rmino de Fibonacci
+int fibonacci(int n) {
+	// Caso base: los dos primeros n�meros de la secuencia
+	if (n == 0) {
+		return 0;
+	} else if (n == 1) {
+		return 1;
+	} else {
+		// Llamada recursiva
+		return fibonacci(n - 1) + fibonacci(n - 2);
+	}
+}
+
+int main() {
+	int n, i;
+	
+	printf("Ingresa el n�mero de t�rminos a mostrar: ");
+	scanf("%d", &n);
+	
+	if (n<0) printf("Error");
+	else
+		{
+	      printf("Serie de Fibonacci para los primeros %d t�rminos:\n", n);
+	      for (i = 0; i < n; i++) 
+		     {
+		       printf("%d ", fibonacci(i));
+	         }
+	    }
+	return 0;
+}
+
+====================================================================
+//PRODUCTO
+#include <stdio.h>
+
+
+int producto_recursivo(int a, int b) {
+	
+	if (b == 0) {
+		return 0;
+	}
+	
+	if (b > 0) {
+		return a + producto_recursivo(a, b - 1);
+	}
+		return -a + producto_recursivo(a, b + 1);
+}
+
+int main() {
+	int num1, num2;
+	
+	printf("Ingrese el primer numero (a): ");
+	scanf("%d", &num1);
+	printf("Ingrese el segundo numero (b): ");
+	scanf("%d", &num2);
+	
+	int resultado = producto_recursivo(num1, num2);
+	
+	printf("El producto de %d x %d sin usar el operador '*' es: %d\n", num1, num2, resultado);
+	
+	return 0;
+}
+=================================================================
+//SUMA
+#include <stdio.h>
+
+// Declaraci�n de la funci�n recursiva
+int sumaRecursiva(int n) {
+	if (n == 0) {
+		return 0; // Caso base
+	} else {
+		return n + sumaRecursiva(n - 1); // Caso recursivo
+	}
+}
+
+int main() {
+	int numero; // Cambie este valor para probar con otros n�meros
+	int resultado;
+	printf("Ingresa el n�mero de t�rminos a mostrar: ");
+	scanf("%d", &numero);
+	// Validaci�n para evitar n�meros negativos
+	if (numero < 0) {
+		printf("Por favor, ingrese un n�mero entero positivo.\n");
+		return 1;
+	}
+	
+	resultado = sumaRecursiva(numero);
+	
+	printf("La suma de los primeros %d numeros naturales es: %d\n", numero, resultado);
+	
+	return 0;
+}
+========================================================
+//ARBOLES
+#include <stdio.h>
+#include <stdlib.h>
+
+// Estructura del nodo
+struct Nodo {
+	int dato;
+	struct Nodo *izq;
+	struct Nodo *der;
+};
+
+// Crear un nuevo nodo
+struct Nodo* crearNodo(int valor) {
+	struct Nodo* nuevo = (struct Nodo*) malloc(sizeof(struct Nodo));
+	
+	nuevo->dato = valor;
+	nuevo->izq = NULL;
+	nuevo->der = NULL;
+	
+	return nuevo;
+}
+
+// Inserci�n recursiva en �rbol binario de b�squeda
+struct Nodo* insertar(struct Nodo* raiz, int valor) {
+	
+	// Caso base
+	if (raiz == NULL)
+		return crearNodo(valor);
+	
+	// Caso recursivo
+	if (valor < raiz->dato)
+		raiz->izq = insertar(raiz->izq, valor);
+	else
+		raiz->der = insertar(raiz->der, valor);
+	
+	return raiz;
+}
+
+// Recorrido InOrden
+void inorden(struct Nodo* raiz) {
+	
+	if (raiz != NULL) {
+		
+		inorden(raiz->izq);
+		
+		printf("%d ", raiz->dato);
+		
+		inorden(raiz->der);
+	}
+}
+
+// Mostrar �rbol de costado
+void mostrarArbol(struct Nodo* raiz, int nivel) {
+	
+	if (raiz == NULL)
+		return;
+	
+	mostrarArbol(raiz->der, nivel + 1);
+	
+	for(int i = 0; i < nivel; i++)
+		printf("     ");
+	
+	printf("%d\n", raiz->dato);
+	
+	mostrarArbol(raiz->izq, nivel + 1);
+}
+
+int main() {
+	
+	struct Nodo* raiz = NULL;
+	
+	int valor;
+	int cantidad;
+	
+	printf("Cantidad de nodos: ");
+	scanf("%d", &cantidad);
+	
+	for(int i = 0; i < cantidad; i++) {
+		
+		printf("Ingrese un valor: ");
+		scanf("%d", &valor);
+		
+		raiz = insertar(raiz, valor);
+	}
+	
+	printf("\n\nARBOL BINARIO\n\n");
+	mostrarArbol(raiz, 0);
+	
+	printf("\nRecorrido InOrden: ");
+	inorden(raiz);
+	
+	printf("\n");
+	
+	return 0;
+}
+=====================================================
+//ARBOLES 1
+#include <stdio.h>
+#include <stdlib.h>
+
+// Estructura para los nodos del �rbol binario
+struct Nodo {
+	int dato;
+	struct Nodo* izquierdo;
+	struct Nodo* derecho;
+};
+
+// Procedimiento para crear e insertar elementos por teclado
+void crearArbol(struct Nodo** raiz, int valor) {
+	if (*raiz == NULL) {
+		struct Nodo* nuevoNodo = (struct Nodo*)malloc(sizeof(struct Nodo));
+		if (nuevoNodo == NULL) {
+			printf("Error: Memoria insuficiente.\n");
+			return;
+		}
+		nuevoNodo->dato = valor;
+		nuevoNodo->izquierdo = NULL;
+		nuevoNodo->derecho = NULL;
+		*raiz = nuevoNodo;
+		printf("-> Valor %d insertado correctamente.\n", valor);
+		return;
+	}
+	
+	if (valor < (*raiz)->dato) {
+		crearArbol(&((*raiz)->izquierdo), valor);
+	} else if (valor > (*raiz)->dato) {
+		crearArbol(&((*raiz)->derecho), valor);
+	} else {
+		printf("-> El valor %d ya existe en el �rbol.\n", valor);
+	}
+}
+
+// Recorrido Preorden: Ra�z -> Izquierdo -> Derecho
+void preOrden(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		printf("%d ", raiz->dato);
+		preOrden(raiz->izquierdo);
+		preOrden(raiz->derecho);
+	}
+}
+
+// Recorrido Orden Central (Inorden): Izquierdo -> Ra�z -> Derecho
+void ordenCentral(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		ordenCentral(raiz->izquierdo);
+		printf("%d ", raiz->dato);
+		ordenCentral(raiz->derecho);
+	}
+}
+
+// Recorrido Postorden: Izquierdo -> Derecho -> Ra�z
+void postOrden(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		postOrden(raiz->izquierdo);
+		postOrden(raiz->derecho);
+		printf("%d ", raiz->dato);
+	}
+}
+
+// Funci�n principal con men� interactivo simplificado
+int main() {
+	struct Nodo* raiz = NULL;
+	int opcion, valor;
+	
+	do {
+		printf("\n=== MENU ARBOL BINARIO ===");
+		printf("\n1. Insertar elemento por teclado");
+		printf("\n2. Mostrar todos los recorridos por pantalla");
+		printf("\n3. Salir");
+		printf("\nSeleccione una opci�n: ");
+		fflush(stdout);
+		
+		if (scanf("%d", &opcion) != 1) {
+			printf("Error: Ingrese un n�mero v�lido.\n");
+			while (getchar() != '\n'); // Limpiar b�fer
+			continue;
+		}
+		
+		switch (opcion) {
+		case 1:
+			printf("Ingrese el valor entero: ");
+			fflush(stdout);
+			scanf("%d", &valor);
+			crearArbol(&raiz, valor);
+			break;
+			
+		case 2:
+			if (raiz == NULL) {
+				printf("\nEl �rbol est� vac�o. Inserte elementos primero.\n");
+			} else {
+				printf ("\n Recorrido del arbol");
+				
+				printf("\n> Preorden (Ra�z-Izq-Der):       ");
+				preOrden(raiz);
+				
+				printf("\n> Orden Central (Izq-Ra�z-Der):  ");
+				ordenCentral(raiz);
+				
+				printf("\n> Postorden (Izq-Der-Ra�z):      ");
+				postOrden(raiz);
+				
+				printf("\n-----------------------------\n");
+			}
+			fflush(stdout);
+			break;
+			
+		case 3:
+			printf("Saliendo del programa...\n");
+			break;
+			
+		default:
+			printf("Opci�n inv�lida.\n");
+		}
+	} while (opcion != 3);
+	
+	return 0;
+}
+=============================================================
+//ARBOLES 2
+#include <stdio.h>
+#include <stdlib.h>
+
+// Estructura para los nodos del �rbol
+struct Nodo {
+	int dato;
+	struct Nodo* izquierdo;
+	struct Nodo* derecho;
+};
+
+// Procedimiento para insertar elementos por teclado
+void crearArbol(struct Nodo** raiz, int valor) {
+	if (*raiz == NULL) {
+		struct Nodo* nuevoNodo = (struct Nodo*)malloc(sizeof(struct Nodo));
+		if (nuevoNodo == NULL) {
+			printf("Error: No hay memoria suficiente.\n");
+			return;
+		}
+		nuevoNodo->dato = valor;
+		nuevoNodo->izquierdo = NULL;
+		nuevoNodo->derecho = NULL;
+		*raiz = nuevoNodo;
+		printf("-> Nodo %d insertado correctamente.\n", valor);
+		return;
+	}
+	
+	if (valor < (*raiz)->dato) {
+		crearArbol(&((*raiz)->izquierdo), valor);
+	} else if (valor > (*raiz)->dato) {
+		crearArbol(&((*raiz)->derecho), valor);
+	} else {
+		printf("-> El valor %d ya existe en el �rbol.\n", valor);
+	}
+}
+
+// Procedimiento corregido para mostrar el �rbol con tabulaciones claras (subniveles)
+void mostrarArbol(struct Nodo* raiz, int nivel) {
+	if (raiz == NULL) {
+		return;
+	}
+	
+	// 1. Procesar primero el hijo derecho (arriba)
+	mostrarArbol(raiz->derecho, nivel + 1);
+	
+	// 2. Imprimir el nodo actual con sangr�a seg�n su nivel
+	printf("\n");
+	for (int i = 0; i < nivel; i++) {
+		printf("\t"); // Usamos tabuladores que son m�s estables que los espacios libres
+	}
+	printf("[%d]", raiz->dato);
+	fflush(stdout); // Fuerza a la consola a mostrar el texto de inmediato
+	
+	// 3. Procesar el hijo izquierdo (abajo)
+	mostrarArbol(raiz->izquierdo, nivel + 1);
+}
+
+// Recorrido Preorden: Ra�z -> Izquierdo -> Derecho
+void preOrden(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		printf("%d ", raiz->dato);
+		preOrden(raiz->izquierdo);
+		preOrden(raiz->derecho);
+	}
+}
+
+// Recorrido Inorden: Izquierdo -> Ra�z -> Derecho
+void inOrden(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		inOrden(raiz->izquierdo);
+		printf("%d ", raiz->dato);
+		inOrden(raiz->derecho);
+	}
+}
+
+// Recorrido Postorden: Izquierdo -> Derecho -> Ra�z
+void postOrden(struct Nodo* raiz) {
+	if (raiz != NULL) {
+		postOrden(raiz->izquierdo);
+		postOrden(raiz->derecho);
+		printf("%d ", raiz->dato);
+	}
+}
+
+// Funci�n principal con el men� interactivo
+int main() {
+	struct Nodo* raiz = NULL;
+	int opcion, valor;
+	
+	do {
+		/*printf("\n\n======= MENU �RBOL BINARIO =======");*/
+		printf("\n1. Insertar elemento (por teclado)");
+		printf("\n2. Mostrar estructura del �rbol");
+		printf("\n3. Recorrido en Preorden");
+		printf("\n4. Recorrido en Inorden");
+		printf("\n5. Recorrido en Postorden");
+		printf("\n6. Salir");
+		printf("\nSeleccione una opci�n: ");
+		fflush(stdout);
+		
+		if (scanf("%d", &opcion) != 1) {
+			printf("Error: Ingrese un n�mero v�lido.\n");
+			while(getchar() != '\n'); // Limpiar el b�fer del teclado en caso de letras
+			continue;
+		}
+		
+		switch (opcion) {
+		case 1:
+			printf("Ingrese el valor entero a insertar: ");
+			fflush(stdout);
+			scanf("%d", &valor);
+			crearArbol(&raiz, valor);
+			break;
+		case 2:
+			if (raiz == NULL) {
+				printf("El �rbol est� vac�o. Inserte elementos primero.\n");
+			} else {
+				printf ("\n");
+				printf("Estructura del arbol.");
+				/*printf ("--- Estructura del �rbol (Gire la cabeza a la izquierda para ver la ra�z) --- ");*/
+				mostrarArbol(raiz, 0);
+				printf("\n-------------------------------------------------------------------------");
+			}
+			break;
+		case 3:
+			{
+			if (raiz == NULL) {printf("\n"); printf ("Arbol vacio");}
+			else { printf("Preorden: "); 
+			       preOrden(raiz); }
+			break;
+			}
+		case 4:
+			if (raiz == NULL) {printf("\n"); printf ("Arbol vacio");}
+			else { printf("Inorden: "); inOrden(raiz); }
+			break;
+		case 5:
+			if (raiz == NULL) {printf("\n"); printf ("Arbol vacio");}
+			else { printf("Postorden: "); postOrden(raiz); }
+			break;
+		case 6:
+			printf("Saliendo del programa...\n");
+			break;
+		default:
+			printf("Opci�n inv�lida. Intente de nuevo.\n");
+		}
+	} while (opcion != 6);
+	
+	return 0;
+}
+==========================================================
+//LISTAS DOBLEMENTE ENCADENADAS
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definici�n de la estructura del nodo
+struct Nodo {
+	int dato;
+	struct Nodo* siguiente;
+	struct Nodo* anterior;
+};
+
+// Prototipos de funciones
+void insertarNodo(struct Nodo** inicio);
+void mostrarAdelante(struct Nodo* inicio);
+void mostrarAtras(struct Nodo* inicio);
+
+int main() {
+	struct Nodo* inicio = NULL;
+	int opcion;
+	
+	do {
+		printf("\n--- MENU LISTA DOBLE ---");
+		printf("\n1. Insertar elemento");
+		printf("\n2. Mostrar de adelante hacia atras");
+		printf("\n3. Mostrar de atras hacia adelante");
+		printf("\n4. Salir");
+		printf("\nSeleccione una opcion: ");
+		scanf("%d", &opcion);
+		
+		switch (opcion) {
+		case 1:
+			insertarNodo(&inicio);
+			break;
+		case 2:
+			mostrarAdelante(inicio);
+			break;
+		case 3:
+			mostrarAtras(inicio);
+			break;
+		case 4:
+			printf("Saliendo del programa...\n");
+			break;
+		default:
+			printf("Opcion no valida.\n");
+		}
+	} while (opcion != 4);
+	
+	return 0;
+}
+
+// Procedimiento para crear e insertar nodos (al final de la lista)
+void insertarNodo(struct Nodo** inicio) {
+	struct Nodo* nuevo = (struct Nodo*)malloc(sizeof(struct Nodo));
+	struct Nodo* auxiliar = *inicio;
+	
+	printf("Ingrese el valor numerico: ");
+	scanf("%d", &nuevo->dato);
+	nuevo->siguiente = NULL;
+	
+	if (*inicio == NULL) {
+		nuevo->anterior = NULL;
+		*inicio = nuevo;
+	} else {
+		while (auxiliar->siguiente != NULL) {
+			auxiliar = auxiliar->siguiente;
+		}
+		auxiliar->siguiente = nuevo;
+		nuevo->anterior = auxiliar;
+	}
+	printf("Elemento insertado correctamente.\n");
+}
+
+// Procedimiento para recorrer de adelante hacia atr�s
+void mostrarAdelante(struct Nodo* inicio) {
+	struct Nodo* auxiliar = inicio;
+	if (inicio == NULL) {
+		printf("La lista esta vacia.\n");
+		return;
+	}
+	printf("Lista (Adelante -> Atras): ");
+	while (auxiliar != NULL) {
+		printf("[%d] ", auxiliar->dato);
+		auxiliar = auxiliar->siguiente;
+	}
+	printf("\n");
+}
+
+// Procedimiento para recorrer de atr�s hacia adelante
+void mostrarAtras(struct Nodo* inicio) {
+	struct Nodo* auxiliar = inicio;
+	if (inicio == NULL) {
+		printf("La lista esta vacia.\n");
+		return;
+	}
+	
+	// Primero llegamos al �ltimo nodo
+	while (auxiliar->siguiente != NULL) {
+		auxiliar = auxiliar->siguiente;
+	}
+	
+	// Recorremos hacia atr�s usando el puntero 'anterior'
+	printf("Lista (Atras -> Adelante): ");
+	while (auxiliar != NULL) {
+		printf("[%d] ", auxiliar->dato);
+		auxiliar = auxiliar->anterior;
+	}
+	printf("\n");
+}
+======================================================
+//LISTA
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Estructura de un nodo
+struct Nodo {
+	int dato;
+	struct Nodo* siguiente;
+};
+
+
+// Funci�n para crear un nuevo nodo
+struct Nodo* crearNodo(int valor) ;
+
+// Funci�n para agregar un nodo al final
+void agregarAlFinal(struct Nodo** cabeza, int valor);
+
+// Funci�n para imprimir la lista
+void imprimirLista(struct Nodo* cabeza);
+// Liberar memoria
+void liberarLista(struct Nodo* cabeza) ;
+
+int main() {
+	struct Nodo* lista = NULL;
+	int opcion, valor;
+	
+	do {
+		printf("\n--- MENU ---\n");
+		printf("1. Agregar nodo\n");
+		printf("2. Mostrar lista\n");
+		printf("3. Salir\n");
+		printf("Seleccione una opcion: ");
+		scanf("%d", &opcion);
+		
+		switch (opcion) {
+		case 1:
+			printf("Ingrese un valor entero: ");
+			scanf("%d", &valor);
+			agregarAlFinal(&lista, valor);
+			break;
+		case 2:
+			imprimirLista(lista);
+			break;
+		case 3:
+			liberarLista(lista);
+			printf("Memoria liberada. Adios.\n");
+			break;
+		default:
+			printf("Opcion invalida.\n");
+		}
+	} while (opcion != 3);
+	
+	return 0;
+}
+
+
+// Funci�n para crear un nuevo nodo
+struct Nodo* crearNodo(int valor) {
+	struct Nodo* nuevo = (struct Nodo*) malloc(sizeof(struct Nodo));
+	if (nuevo == NULL) {
+		printf("Error: no se pudo asignar memoria.\n");
+		exit(1);
+	}
+	nuevo->dato = valor;
+	nuevo->siguiente = NULL;
+	return nuevo;
+}
+
+// Funci�n para agregar un nodo al final
+void agregarAlFinal(struct Nodo** cabeza, int valor) {
+	struct Nodo* nuevo = crearNodo(valor);
+	
+	if (*cabeza == NULL) {
+		*cabeza = nuevo;
+	} else {
+		struct Nodo* actual = *cabeza;
+		while (actual->siguiente != NULL) {
+			actual = actual->siguiente;
+		}
+		actual->siguiente = nuevo;
+	}
+}
+
+// Funci�n para imprimir la lista
+void imprimirLista(struct Nodo* cabeza) {
+	printf("Lista: ");
+	while (cabeza != NULL) {
+		printf("%d -> ", cabeza->dato);
+		cabeza = cabeza->siguiente;
+	}
+	printf("NULL\n");
+}
+
+// Liberar memoria
+void liberarLista(struct Nodo* cabeza) {
+	struct Nodo* temp;
+	while (cabeza != NULL) {
+		temp = cabeza;
+		cabeza = cabeza->siguiente;
+		free(temp);
+	}
+}
